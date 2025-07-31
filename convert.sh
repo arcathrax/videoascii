@@ -8,7 +8,6 @@ fi
 
 videoPath="$1"
 
-# Step 2: Check if the directory exists, otherwise create it
 if [ -d "~/.videoascii/" ]; then
     echo "~/.videoascii/ does exist."
 else
@@ -16,12 +15,15 @@ else
     mkdir -p ~/.videoascii/
 fi
 
-# Step 3: Run ffmpeg to extract frames
+
+fps=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 "$videoPath")
+delay=$(echo "scale=4; 1/$fps" | bc)
+
 ffmpeg -i "$videoPath" -r 1 ~/.videoascii/frame_%d.png
 
-# Step 4: Loop through each frame and run txt_to_img
 for frame in ~/.videoascii/frame_*.png; do
     ./img_to_txt/img_to_txt $frame
+    sleep $delay
 done
 
 rm -rf ~/.videoascii/*
