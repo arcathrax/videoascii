@@ -19,7 +19,8 @@ fi
 fps=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 "$videoPath")
 delay=$(echo "scale=4; 1/$fps" | bc)
 
-ffmpeg -i "$videoPath" -r 1 ~/.videoascii/frame_%d.png
+
+ffmpeg -i "$videoPath" -vsync 0 ~/.videoascii/frame_%d.png
 
 for frame in ~/.videoascii/frame_*.png; do
     ./img_to_txt/img_to_txt $frame
