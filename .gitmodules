@@ -1,0 +1,3 @@
+[submodule "img_to_txt"]
+	path = img_to_txt
+	url = https://github.com/danny-burrows/img_to_txt.git
