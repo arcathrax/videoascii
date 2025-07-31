@@ -23,3 +23,5 @@ ffmpeg -i "$videoPath" -r 1 ~/.config/videoascii/frame_%d.png
 for frame in ~/.config/videoascii/frame_*.png; do
     ./img_to_txt/img_to_txt $frame
 done
+
+rm -rf ~/.config/videoascii/*
